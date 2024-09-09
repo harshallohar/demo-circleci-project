@@ -5,10 +5,13 @@
     "main": "app.js",
     "scripts": {
       "start": "node app.js",
-      "test": "echo \"No tests yet\" && exit 0"
+      "test": "echo \"No tests yet\" && exit 0",
+      "build": "npm run build"  // Replace this with your actual build command
     },
     "dependencies": {
-      "express": "^4.17.1"
+      "express": "^4.17.1",
+      "webpack": "^5.0.0",  // Include Webpack if you're using it
+      "webpack-cli": "^4.0.0"
     }
   }
   
