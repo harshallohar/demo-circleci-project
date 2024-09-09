@@ -43,7 +43,7 @@ jobs:
       - checkout
       - run:
           name: Deploy Application
-          command: echo "Deploying application..."  # Replace with actual deployment commands
+          command: echo "Deploying application securly..."  # Replace with actual deployment commands
 
 # Workflows define the order in which jobs are executed.
 workflows:
