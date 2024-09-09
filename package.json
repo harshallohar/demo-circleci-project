@@ -1,0 +1,14 @@
+{
+    "name": "circleci-nodejs-sample",
+    "version": "1.0.0",
+    "description": "A sample Node.js app for CircleCI pipeline demonstration",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js",
+      "test": "echo \"No tests yet\" && exit 0"
+    },
+    "dependencies": {
+      "express": "^4.17.1"
+    }
+  }
+  
