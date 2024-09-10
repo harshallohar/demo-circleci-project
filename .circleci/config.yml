@@ -1,60 +1,29 @@
 version: 2.1
 
 executors:
-  node-executor:
+  docker-executor:
     docker:
-      - image: circleci/node:14  # Use the Node.js 14 Docker image
-    working_directory: ~/my-node-app  # Working directory in the container
+      - image: circleci/node:16
 
 jobs:
-  # Job 1: Install dependencies
-  install_dependencies:
-    executor: node-executor
+  build:
+    executor: docker-executor
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 20.10.7
       - run:
-          name: Install Node.js Dependencies
-          command: npm install  # Install dependencies
-
-  # Job 2: Run tests
-  run_tests:
-    executor: node-executor
-    steps:
-      - checkout
+          name: Install dependencies
+          command: npm install
       - run:
-          name: Run Tests
-          command: npm test  # Run your test suite
-
-  # Job 3: Build application (if necessary)
-  build_application:
-    executor: node-executor
-    steps:
-      - checkout
+          name: Build the Docker image
+          command: docker build -t circleci-nodejs-sample .
       - run:
-          name: Build Application
-          command: npm run build  # Run the build script to bundle the app
+          name: Run the container
+          command: docker run -d -p 3000:3000 circleci-nodejs-sample
 
-  # Job 4: Deploy the application
-  deploy_application:
-    executor: node-executor
-    steps:
-      - checkout
-      - run:
-          name: Deploy Application
-          command: echo "Deploying application..."  # Add actual deployment commands
-
-# Define the workflow to orchestrate jobs
 workflows:
   version: 2
-  build_and_deploy:
+  build_and_test:
     jobs:
-      - install_dependencies  # Install dependencies first
-      - run_tests:  # Run tests after dependencies are installed
-          requires:
-            - install_dependencies
-      - build_application:  # Build the app if tests pass
-          requires:
-            - run_tests
-      - deploy_application:  # Deploy if the build succeeds
-          requires:
-            - build_application
+      - build
